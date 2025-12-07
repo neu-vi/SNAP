@@ -69,27 +69,26 @@ python -m pip install pyvista open3d
 ## Interactive Demo
 Download the SNAP-C checkpoint from [here](#checkpoints) into a “checkpoints/” folder in the current working directory.
 ```shell
-python demo.py --pc_path <path to point cloud files> --domain <domain> --resume <path to model checkpoint>
+python iterative_gui_demo.py --pc_path <path to point cloud files> --domain <domain> --resume <path to model checkpoint>
 ```
 
 Examples for the provided point cloud files:
 ```shell
-python demo.py --pc_path data_examples/S3DIS/conferenceRoom_1/ --domain Indoor --resume checkpoints/scannet_model_epoch_500.pth
-python demo.py --pc_path data_examples/ScanNet/scene0011_00 --domain Indoor --resume checkpoints/scannet_model_epoch_500.pth
-python demo.py --pc_path data_examples/KITTI/000000.bin  --domain Outdoor --resume checkpoints/outdoor_model_epoch_16.pth
-python demo.py --pc_path data_examples/nuScenes/example_3.pcd.bin --domain=Outdoor --resume checkpoints/outdoor_model_epoch_16.pth
+python iterative_gui_demo.py --pc_path data_examples/S3DIS/conferenceRoom_1/ --domain Indoor --resume checkpoints/SNAP_C.pth
+python iterative_gui_demo.py --pc_path data_examples/ScanNet/scene0011_00 --domain Indoor --resume checkpoints/SNAP_C.pth
+python iterative_gui_demo.py --pc_path data_examples/KITTI/000000.bin  --domain Outdoor --resume checkpoints/SNAP_C.pth
+python iterative_gui_demo.py --pc_path data_examples/nuScenes/example_3.pcd.bin --domain=Outdoor --resume checkpoints/SNAP_C.pth
 ```
 
 Once the demo is launched, it'll load the pointcloud in a visualization window, you can segment objects using following steps:
 1. Left click to rotate the point cloud, middle click to pan, middle click scroll to zoom in/out and <b>right click to mark prompt points</b>.
-2. Once you have marked the points, press the "New object" button to save the prompt clicks and start a new object.
-3. If you want to segment multiple objects, repeat the steps 1 and 2.
-4. Once you have marked all the objects, press the "Segment" button to segment the objects.
-5. The segmented objects will be displayed in different colors.
+2. Right click on a object to segment it. You can mark multiple points on the same object to improve segmentation.
+3. Press "New object" button to segment a new object.
+4. Press "Finalize Segment" button to finalize the segmentation.
 
 If you want to visualize the results on the complete data (if you have the full dataset), set the data_root parameter in the config file of the respective dataset and run 
 ```shell
-torchrun --nproc_per_node=1 vis_all.py --distributed --use_pdnorm --resume checkpoints/scannet_model_epoch_500.pth --stage scannet --iterative --enable_amp
+torchrun --nproc_per_node=1 vis_all.py --distributed --use_pdnorm --resume checkpoints/SNAP_C.pth --stage scannet --iterative --enable_amp
 ```
 
 ## Python Snippets to run the model
@@ -174,4 +173,4 @@ Note that use_centroid flag enables the use of centroid prompts during evaluatio
 ```
 
 ## Acknowledgements
-We thank the authors of [PointTransformerV3]() and [Pointcept]() for their open-source codebases which were used in parts of this project. 
+We thank the authors of [PointTransformerV3](https://github.com/Pointcept/PointTransformerV3) and [Pointcept](https://github.com/Pointcept/Pointcept) for their open-source codebases which were used in parts of this project. 

@@ -1,1 +1,6 @@
 checkpoints/
+logs/
+dev_logs/
+dev_checkpoints/
+*.pyc
+__pycache__/

@@ -2,7 +2,7 @@ import torch
 import argparse
 import os
 from datetime import datetime
-from datasets import build_dataset_single_mask_new
+from datasets import build_dataset_single_mask
 from datasets import collate_utils
 from dataloaders.multidataset_loader import MultiDataset
 from src.snap import SNAP
@@ -12,7 +12,7 @@ from torch.utils.tensorboard import SummaryWriter
 import logging
 from tqdm import tqdm
 import torch.nn.functional as F
-from conf_input import semantic_kitti_new, nuscenes_new, pandaset, scannet, s3dis, scanrefer, scannetpp, scannet_block, partnet, kitti360, stpls3d 
+from conf_input import semantic_kitti, nuscenes, pandaset, scannet, s3dis, scannetpp, kitti360, stpls3d, dales, kitti360full, s3disfull, replica, hm3d, matterport, urbanbis, kitti360_ss, waymo
 import torch.distributed as dist
 import pdb
 import copy
@@ -97,7 +97,7 @@ def load_model_weights(model, checkpoint_path):
     for k, v in checkpoint['model'].items():
         state_dict[k] = v
 
-    model.load_state_dict(state_dict)
+    model.load_state_dict(state_dict, strict=False)
     return model
 
 def random_sample_clicks(preds, masks, coords, offset, threshold):
@@ -511,9 +511,9 @@ def setup_dataloaders(args, config_list):
     train_dataset_list = []
     val_dataset_list = []
     for stage, config in zip(args.stage, config_list):
-        train_dataset_i = build_dataset_single_mask_new(config, stage, split="train", num_prompt_points=args.num_prompt_points, 
+        train_dataset_i = build_dataset_single_mask(config, stage, split="train", num_prompt_points=args.num_prompt_points, 
                             num_object_points=args.num_object_points, overfit=args.overfit, use_random_clicks=args.use_random_clicks)
-        val_dataset_i = build_dataset_single_mask_new(config, stage, split="val", num_prompt_points=args.num_prompt_points, 
+        val_dataset_i = build_dataset_single_mask(config, stage, split="val", num_prompt_points=args.num_prompt_points, 
                             num_object_points=args.num_object_points, overfit=args.overfit, use_random_clicks=args.use_random_clicks)
 
         train_dataset_list.append(train_dataset_i)
