@@ -1,5 +1,5 @@
 <div align="center">
-<h1>SNAP: Towards Segmenting Anything in Any Point Cloud</h1>
+<h1>SNAP: Towards Segmenting Anything in Any Point Cloud (3DV 2026 Best Paper Candidate)</h1>
 <a href="https://arxiv.org/abs/2510.11565"><img src="https://img.shields.io/badge/arXiv-2509.16909-b31b1b" alt="arXiv"></a>
 <a href="https://neu-vi.github.io/SNAP/"><img src="https://img.shields.io/badge/Project_Page-green" alt="Project Page"></a>
 
